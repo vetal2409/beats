@@ -18,6 +18,7 @@
 package readfile
 
 import (
+	"bytes"
 	"io"
 
 	"golang.org/x/text/encoding"
@@ -186,7 +187,7 @@ func (r *LineReader) decode(end int) (int, error) {
 		}
 
 		start += nSrc
-		r.outBuffer.Write(buffer[:nDst])
+		r.outBuffer.Write(bytes.TrimLeft(buffer[:nDst], "\x00"))
 	}
 
 	r.byteCount += start
